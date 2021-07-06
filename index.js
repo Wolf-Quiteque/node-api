@@ -24,7 +24,7 @@ const pdfConvertor = require("./routes/pdfconvertor");
 app.use(function (req, res, next) {
   res.header(
     "Access-Control-Allow-Origin",
-    "https://loving-albattani-a66e95.netlify.app/"
+    "https://loving-albattani-a66e95.netlify.app"
   ); // update to match the domain you will make the request from
   res.header(
     "Access-Control-Allow-Headers",
