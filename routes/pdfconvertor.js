@@ -20,7 +20,7 @@ router.get("/ottx/:url", async (req, res) => {
   var ot_nr_dia = [];
   var ot_nr_anterior = [];
   var ot_nr = [];
-  axios("http://127.0.0.1:8000/pdf/" + req.params.url)
+  axios("https://emainvest-python-api.herokuapp.com/pdf/" + req.params.url)
     .then((response) => {
       pdfData = response.data.data;
 
@@ -250,7 +250,7 @@ router.get("/otnr/:url", async (req, res) => {
   var ot_nr_anterior = [];
   var ot_nr = [];
   var wave = 0;
-  axios("http://127.0.0.1:8000/pdf/" + req.params.url)
+  axios("https://emainvest-python-api.herokuapp.com/pdf/" + req.params.url)
     .then((response) => {
       pdfData = response.data.data;
 
