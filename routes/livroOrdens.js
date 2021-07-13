@@ -8,7 +8,7 @@ router.put("/novo", async (req, res) => {
       codigo_de_negociacao: req.body.codigo_de_negociacao,
       lado_de_ordem: req.body.lado_de_ordem,
       preco_disparo: req.body.preco_disparo,
-      quantia: req.body.quantia,
+      quantidade_total: req.body.quantidade_total,
     });
 
     const livroOrdens = await novoLivroOrdens.save();
