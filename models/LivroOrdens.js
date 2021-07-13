@@ -11,22 +11,10 @@ const LivroOrdensSchema = new mongoose.Schema(
     lado_de_ordem: {
       type: String,
     },
-    condicao_preco: {
-      type: String,
-    },
     preco_disparo: {
       type: Number,
     },
-    condicao_temporal: {
-      type: String,
-    },
-    validade: {
-      type: Date,
-    },
     quantia: {
-      type: Number,
-    },
-    quantia_minima: {
       type: Number,
     },
     estado: {

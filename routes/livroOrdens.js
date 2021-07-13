@@ -7,13 +7,8 @@ router.put("/novo", async (req, res) => {
       id_cliente: req.body.userId,
       codigo_de_negociacao: req.body.codigo_de_negociacao,
       lado_de_ordem: req.body.lado_de_ordem,
-      condicao_preco: req.body.condicao_preco,
       preco_disparo: req.body.preco_disparo,
-      condicao_temporal: req.body.condicao_temporal,
-      validade: req.body.validade,
       quantia: req.body.quantia,
-      quantia_minima: req.body.quantia_minima,
-      estado: req.body.estado,
     });
 
     const livroOrdens = await novoLivroOrdens.save();
