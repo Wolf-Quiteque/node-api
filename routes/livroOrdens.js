@@ -8,6 +8,7 @@ router.put("/novo", async (req, res) => {
       codigo_de_negociacao: req.body.codigo_de_negociacao,
       lado_de_ordem: req.body.lado_de_ordem,
       preco_disparo: req.body.preco_disparo,
+      preco_limite: req.body.preco_limite,
       quantidade_total: req.body.quantidade_total,
     });
 

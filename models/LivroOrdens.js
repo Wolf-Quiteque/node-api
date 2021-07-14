@@ -14,6 +14,9 @@ const LivroOrdensSchema = new mongoose.Schema(
     preco_disparo: {
       type: Number,
     },
+    preco_limite: {
+      type: Number,
+    },
     quantidade_total: {
       type: Number,
     },
