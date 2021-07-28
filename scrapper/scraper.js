@@ -28,6 +28,7 @@ router.get("/jornaldeangola", async (req, res) => {
           lastUpdated: lastUpdated,
           title: title,
           desc: desc,
+          fonte: "jornal de angola",
         });
       });
 
@@ -59,6 +60,7 @@ router.get("/jornaleconomia", async (req, res) => {
           data: data,
           desc: desc,
           link: link,
+          fonte: "Mercado",
         });
       });
 
@@ -90,6 +92,7 @@ router.get("/jornalnegocios", async (req, res) => {
           data: data,
           desc: desc,
           link: link,
+          fonte: "Mercado",
         });
       });
 
