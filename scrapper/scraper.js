@@ -21,6 +21,7 @@ router.get("/jornaldeangola", async (req, res) => {
         const lastUpdated = $(this).find(".last-updated").text();
         const title = $(this).find("h2").text();
         const desc = $(this).find("p").text();
+        const link = $(this).find("a").attr("href");
 
         noticias.push({
           capa: capa,
@@ -28,6 +29,7 @@ router.get("/jornaldeangola", async (req, res) => {
           lastUpdated: lastUpdated,
           title: title,
           desc: desc,
+          link: link,
           fonte: "jornal de angola",
         });
       });
@@ -49,7 +51,7 @@ router.get("/jornaleconomia", async (req, res) => {
 
       itemNoticaDiv.each(function () {
         const title = $(this).find("h2").text();
-        const capa = $(this).find("img").attr("data-srcset");
+        const capa = $(this).find("img").attr("srcset");
         const data = $(this).find(".date").text();
         const desc = $(this).find(".text-wrapper").text();
         const link = $(this).find("a").attr("href");
@@ -81,7 +83,7 @@ router.get("/jornalnegocios", async (req, res) => {
 
       itemNoticaDiv.each(function () {
         const title = $(this).find("h2").text();
-        const capa = $(this).find("img").attr("data-srcset");
+        const capa = $(this).find("img").attr("srcset");
         const data = $(this).find(".date").text();
         const desc = $(this).find(".text-wrapper").text();
         const link = $(this).find("a").attr("href");
@@ -99,6 +101,55 @@ router.get("/jornalnegocios", async (req, res) => {
       res.status(200).json(noticias);
     })
     .catch(console.error);
+});
+
+router.post("/newsinfo", async (req, res) => {
+  if (req.body.fonte == "Mercado") {
+    axios(req.body.url)
+      .then((response) => {
+        const html = response.data;
+        const $ = cheerio.load(html);
+        const title = $("body").find("h1").text();
+        const desc = $("body").find(".paragraph").text();
+        res.status(200).json({ title: title, desc: desc });
+      })
+      .catch(console.error);
+  } else {
+    axios(req.body.url)
+      .then((response) => {
+        const html = response.data;
+        const $ = cheerio.load(html);
+        const title = $("body").find("h1").text();
+        const desc = $("body").find(".body-news").text();
+        res.status(200).json({ title: title, desc: desc });
+      })
+      .catch(console.error);
+  }
+  // const url = req.params.url;
+  // console.log("this is url " + url);
+  // axios(url)
+  //   .then((response) => {
+  //     const html = response.data;
+  //     const $ = cheerio.load(html);
+  //     const itemNoticaDiv = $("body");
+  //     const noticias = [];
+
+  //     itemNoticaDiv.each(function () {
+  //       const title = $(this).find("h1").text();
+  //       const desc = $(this).find(".paragraph").text();
+  //       const data = $(this).find(".datefrom small").text();
+
+  //       noticias.push({
+  //         title: title,
+  //         data: data,
+  //         desc: desc,
+  //         fonte: "Mercado",
+  //       });
+  //     });
+
+  //     res.status(200).json(noticias);
+  //   })
+  //   .catch(console.error);
 });
 
 router.get("/valoreconomico-empresas-negocios", async (req, res) => {
