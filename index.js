@@ -52,19 +52,25 @@ app.use(morgan("common"));
 
 app.use("/images", express.static(path.join(__dirname, "public/images")));
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "./public/images/");
+var uploadimgname;
+
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "public/images/posts");
   },
-  filename: (req, file, cb) => {
-    cb(null, req.body.name);
+  filename: function (req, file, cb) {
+    uploadimgname = Date.now() + ".jpg";
+    cb(null, uploadimgname);
   },
 });
 
-const upload = multer({ storage });
+var upload = multer({ storage: storage });
+
 app.post("/api/upload", upload.single("file"), (req, res) => {
   try {
-    return res.status(200).json("file uploaded successfully");
+    const file = req.file;
+    console.log();
+    res.status(200).json({ img: uploadimgname });
   } catch (err) {
     console.log(err);
   }

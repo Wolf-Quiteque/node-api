@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const Usuario = require("../models/Usuario");
 const bcrypt = require("bcrypt");
+const multer = require("multer");
 
 //atualizar usuario
 router.put("/:id", async (req, res) => {
@@ -139,6 +140,29 @@ router.put("/:id/naoseguir", async (req, res) => {
       .json(
         "opercao invalido: nao podes deixar de se seguir , porque nao podes se seguir, se toto"
       );
+  }
+});
+
+var uploadimgname;
+
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "public/images/users");
+  },
+  filename: function (req, file, cb) {
+    uploadimgname = Date.now() + ".jpg";
+    cb(null, uploadimgname);
+  },
+});
+
+var upload = multer({ storage: storage });
+
+router.post("/upload-profile", upload.single("file"), (req, res) => {
+  try {
+    console.log();
+    res.status(200).json({ img: uploadimgname });
+  } catch (err) {
+    console.log(err);
   }
 });
 
