@@ -20,7 +20,7 @@ const UserSchema = new mongoose.Schema(
     },
     categoria: {
       type: String,
-      default: "",
+      default: "Demo",
     },
     password: {
       type: String,
@@ -50,6 +50,10 @@ const UserSchema = new mongoose.Schema(
     desc: {
       type: String,
       max: 50,
+      default: "",
+    },
+    bi: {
+      type: String,
       default: "",
     },
     provincia: {
@@ -88,6 +92,10 @@ const UserSchema = new mongoose.Schema(
     carteira: {
       type: Number,
       default: 0,
+    },
+    conta: {
+      type: String,
+      default: "",
     },
   },
   { timestamps: true }

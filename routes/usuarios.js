@@ -144,23 +144,45 @@ router.put("/:id/naoseguir", async (req, res) => {
 });
 
 var uploadimgname;
+var biupload;
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "public/images/users");
   },
   filename: function (req, file, cb) {
-    uploadimgname = Date.now() + ".jpg";
+    uploadimgname = Date.now() + file.originalname;
     cb(null, uploadimgname);
   },
 });
 
+var storageBi = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "public/profile");
+  },
+  filename: function (req, file, cb) {
+    biupload = Date.now() + file.originalname;
+    cb(null, biupload);
+    console.log(file);
+  },
+});
+
 var upload = multer({ storage: storage });
+var uploadBi = multer({ storage: storageBi });
 
 router.post("/upload-profile", upload.single("file"), (req, res) => {
   try {
     console.log();
     res.status(200).json({ img: uploadimgname });
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+router.post("/upload-bi", uploadBi.single("file"), (req, res) => {
+  try {
+    console.log();
+    res.status(200).json({ bi: biupload });
   } catch (err) {
     console.log(err);
   }
