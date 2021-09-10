@@ -1,30 +1,27 @@
 const mongoose = require("mongoose");
 
-const OrdensSchema = new mongoose.Schema(
+const MatchingSchema = new mongoose.Schema(
   {
-    id_cliente: {
-      type: String,
-    },
     codigo_de_negociacao: {
       type: String,
     },
-    lado_de_ordem: {
+    id_cliente: {
       type: String,
     },
     tipo_ordem: {
       type: String,
     },
-    cotacao: {
-      type: Number,
+    lado_de_ordem: {
+      type: String,
     },
     quantidade_total: {
       type: Number,
     },
-    estado: {
-      type: String,
+    cotacao: {
+      type: Number,
     },
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Ordens", OrdensSchema);
+module.exports = mongoose.model("Matching", MatchingSchema);

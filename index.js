@@ -16,10 +16,92 @@ const noticiaRoute = require("./routes/noticia");
 const conversationRoute = require("./routes/conversations");
 const messagesRoute = require("./routes/messages");
 const ordensRoute = require("./routes/ordens");
-const livroOrdensRoute = require("./routes/livroOrdens");
 const quoteRoute = require("./routes/quote");
 const scraperRoute = require("./scrapper/scraper");
 const pdfConvertor = require("./routes/pdfconvertor");
+const matching = require("./routes/matching/index");
+const Matches = require("./models/Matching");
+const Negociacao = require("./models/Negociacao");
+const updateChart = require("./scrapper/scrapping_ordins");
+const negocios = require("./routes/negocios");
+
+updateChart();
+
+setInterval(function () {
+  const getMatches = async () => {
+    let Bidside = [];
+    let Askside = [];
+    let matches = [];
+
+    try {
+      matches = await Matches.find({});
+      for (let index = 0; index < matches.length; index++) {
+        if (matches[index].lado_de_ordem == "ask") {
+          for (let indexBid = 0; indexBid < matches.length; indexBid++) {
+            if (
+              matches[indexBid].lado_de_ordem == "bid" &&
+              matches[indexBid].codigo_de_negociacao ==
+                matches[index].codigo_de_negociacao &&
+              matches[index].cotacao >= matches[indexBid].cotacao &&
+              matches[indexBid].quantidade_total != 0
+            ) {
+              if (
+                matches[indexBid].quantidade_total >=
+                matches[index].quantidade_total
+              ) {
+                matches[indexBid].quantidade_total =
+                  parseInt(matches[indexBid].quantidade_total) -
+                  parseInt(matches[index].quantidade_total);
+
+                matches[index].quantidade_total = 0;
+              } else {
+                matches[index].quantidade_total =
+                  parseInt(matches[index].quantidade_total) -
+                  parseInt(matches[indexBid].quantidade_total);
+
+                matches[indexBid].quantidade_total = 0;
+              }
+            }
+          }
+        }
+
+        if (matches[index].lado_de_ordem == "bid") {
+          for (let indexAsk = 0; indexAsk < matches.length; indexAsk++) {
+            if (
+              matches[indexAsk].lado_de_ordem == "ask" &&
+              matches[indexAsk].codigo_de_negociacao ==
+                matches[index].codigo_de_negociacao &&
+              matches[index].cotacao >= matches[indexAsk].cotacao &&
+              matches[indexAsk].quantidade_total != 0
+            ) {
+              if (
+                matches[indexAsk].quantidade_total >=
+                matches[index].quantidade_total
+              ) {
+                matches[indexAsk].quantidade_total =
+                  parseInt(matches[indexAsk].quantidade_total) -
+                  parseInt(matches[index].quantidade_total);
+
+                matches[index].quantidade_total = 0;
+              } else {
+                matches[index].quantidade_total =
+                  parseInt(matches[index].quantidade_total) -
+                  parseInt(matches[indexAsk].quantidade_total);
+
+                matches[indexAsk].quantidade_total = 0;
+              }
+            }
+          }
+        }
+      }
+
+      console.log(matches);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  // getMatches();
+}, 6000);
 
 app.use(function (req, res, next) {
   res.header(
@@ -84,10 +166,11 @@ app.use("/api/noticia", noticiaRoute);
 app.use("/api/conversations", conversationRoute);
 app.use("/api/messages", messagesRoute);
 app.use("/api/ordem", ordensRoute);
-app.use("/api/livroordem", livroOrdensRoute);
 app.use("/api/quote", quoteRoute);
 app.use("/api/scraper", scraperRoute);
 app.use("/api/pdf", pdfConvertor);
+app.use("/api/engine", matching);
+app.use("/api/negocios", negocios);
 
 //iniciar App
 app.listen(process.env.PORT || 8800, () => {
