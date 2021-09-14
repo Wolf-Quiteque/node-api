@@ -77,16 +77,19 @@ function updateChart() {
 
       const UploadOrdens = async () => {
         try {
-          const ordem = await Negociacao.findById("612c99bfc328ab3014c62086");
-          await ordem.updateOne({
+          const ordemot = await Negociacao.findById("612c99bfc328ab3014c62086");
+          const ordembt = await Negociacao.findById("613f2b4c8a7a47071408ad47");
+          await ordemot.updateOne({
             $push: { ordens: ordensotnr },
+          });
+          await ordembt.updateOne({
+            $push: { ordens: ordensottx },
           });
           console.log(200);
         } catch (error) {
           console.log(error);
         }
       };
-
       // UploadOrdens();
     })
     .catch(console.error);
