@@ -103,7 +103,9 @@ const UserSchema = new mongoose.Schema(
     },
     confirmado: {
       type: String,
-      default: "nao",
+    },
+    Token: {
+      type: String,
     },
   },
   { timestamps: true }

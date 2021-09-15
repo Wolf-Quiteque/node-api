@@ -5,6 +5,7 @@ const nodemailer = require("nodemailer");
 
 //Registrar
 router.post("/registrar", async (req, res) => {
+  const token = Math.floor(Math.random() * 10000000) + 10000000;
   async function main() {
     // Generate test SMTP service account from ethereal.email
     // Only needed if you don't have a real mail account for testing
@@ -15,53 +16,60 @@ router.post("/registrar", async (req, res) => {
       port: 465,
       secure: true, // true for 465, false for other ports
       auth: {
-        user: "marcioqui3@gmail.com", // generated ethereal user
-        pass: "shinobi777", // generated ethereal password
+        user: "emainvestsuport@gmail.com", // generated ethereal user
+        pass: "Emainvest@2021", // generated ethereal password
       },
     });
 
     // send mail with defined transport object
-    await transporter.sendMail(
-      {
-        from: "marcioqui3@gmail.com", // sender address
-        to: req.body.email, // list of receivers
-        subject: "Hello ✔", // Subject line
-        text: "Hello world?", // plain text body
-        html: "<b>Hello world?</b>", // html body
-      },
-      function (error, response) {
-        if (error) {
-          console.log(error);
-          res.end("error");
-        } else {
-          console.log("Message sent: " + response.message);
-          res.end("sent");
-        }
-      }
-    );
+    await transporter.sendMail({
+      from: "emainvestsuport@gmail.com", // sender address
+      to: req.body.email, // list of receivers
+      subject: "EMAINVEST-SCVM - VERIFICAR EMAIL", // Subject line
+      text: "", // plain text body
+      html:
+        ' <img src="https://emainvest.herokuapp.com/images/logo.png" height="80"> <br>Muito Obrigado ' +
+        req.body.username +
+        ', por se registrar na platafroma EMAINVEST-SCVM.Por favor <a href="https://emainvest.herokuapp.com/api/auth/link/' +
+        req.body.email +
+        token +
+        '">SEGUE ESTE LINK</a> para fazer a confirmação da sua conta', // html body
+    });
   }
-
   main().catch(console.error);
 
-  // try {
-  //   //cryptografar senha
-  //   const salt = await bcrypt.genSalt(10);
-  //   const hashedPassword = await bcrypt.hash(req.body.password, salt);
+  try {
+    //cryptografar senha
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(req.body.password, salt);
 
-  //   //criar novo usuario
-  //   const novoUsuario = new Usuario({
-  //     username: req.body.username,
-  //     email: req.body.email,
-  //     password: hashedPassword,
-  //     Tel: req.body.Tel,
-  //   });
+    //criar novo usuario
+    const novoUsuario = new Usuario({
+      username: req.body.username,
+      email: req.body.email,
+      password: hashedPassword,
+      Tel: req.body.Tel,
+      Token: req.body.email + token,
+    });
 
-  //   //guardar usuario e resposta
-  //   const usuario = await novoUsuario.save();
-  //   res.status(200).json(usuario);
-  // } catch (err) {
-  //   res.status(500).json(err);
-  // }
+    //guardar usuario e resposta
+    const usuario = await novoUsuario.save();
+    res.status(200).json(usuario);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+router.get("/link/:email", async (req, res) => {
+  try {
+    const usuario = await Usuario.findOne({ Token: req.params.email });
+    await Usuario.findByIdAndUpdate(usuario._id, {
+      confirmado: "true",
+    });
+    res.send("muito obrigado sua conta foi confirmado");
+  } catch (err) {
+    return res.status(500).send("ouve um erro");
+  }
 });
 
 //Login
@@ -75,8 +83,11 @@ router.post("/login", async (req, res) => {
       usuario.password
     );
     !validarPassword && res.status(400).json("senha errado");
-
-    res.status(200).json(usuario);
+    if (!usuario.confirmado) {
+      res.status(400).json("senha errado");
+    } else {
+      res.status(200).json(usuario);
+    }
   } catch (err) {
     res.status(500).json(err);
   }
