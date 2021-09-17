@@ -72,7 +72,7 @@ router.get("/link/:email", async (req, res) => {
   }
 });
 
-//Login
+//Login this is the new login
 router.post("/login", async (req, res) => {
   try {
     const usuario = await Usuario.findOne({ email: req.body.email });
