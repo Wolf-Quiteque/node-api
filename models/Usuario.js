@@ -107,6 +107,21 @@ const UserSchema = new mongoose.Schema(
     Token: {
       type: String,
     },
+    documentos_do_procurador: {
+      type: String,
+    },
+    diario_republica: {
+      type: String,
+    },
+    registo_comercial: {
+      type: String,
+    },
+    Contrato_Sociedade: {
+      type: String,
+    },
+    tipo: {
+      type: String,
+    },
   },
   { timestamps: true }
 );
