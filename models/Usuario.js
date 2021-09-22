@@ -122,6 +122,9 @@ const UserSchema = new mongoose.Schema(
     tipo: {
       type: String,
     },
+    nif: {
+      type: String,
+    },
   },
   { timestamps: true }
 );

@@ -50,6 +50,7 @@ router.post("/registrar", async (req, res) => {
       password: hashedPassword,
       Tel: req.body.Tel,
       Token: req.body.email + token,
+      tipo: req.body.tipo,
     });
 
     //guardar usuario e resposta
