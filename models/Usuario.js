@@ -95,7 +95,7 @@ const UserSchema = new mongoose.Schema(
     },
     carteiraDemo: {
       type: Number,
-      default: 0,
+      default: 100000000,
     },
     conta: {
       type: String,
@@ -123,6 +123,15 @@ const UserSchema = new mongoose.Schema(
       type: String,
     },
     nif: {
+      type: String,
+    },
+    accoes_disponivel: {
+      type: String,
+    },
+    accoes_cotada: {
+      type: String,
+    },
+    proffisao: {
       type: String,
     },
   },

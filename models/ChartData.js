@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const ChartDataSchema = new mongoose.Schema(
   {
-    codigo_de_negociacao: {
+    cod_de_negociacao: {
       type: String,
     },
     date: {

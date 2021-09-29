@@ -104,10 +104,19 @@ setInterval(function () {
 }, 6000);
 
 app.use(function (req, res, next) {
-  res.header(
-    "Access-Control-Allow-Origin",
-    "https://loving-albattani-a66e95.netlify.app"
-  ); // update to match the domain you will make the request from
+  const allowedOrigins = [
+    "https://loving-albattani-a66e95.netlify.app",
+    "http://localhost:3000",
+    "https://vibrant-sinoussi-8e705d.netlify.app",
+  ];
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader("Access-Control-Allow-Origin", origin);
+  }
+  // res.header(
+  //   "Access-Control-Allow-Origin",
+  //   "https://loving-albattani-a66e95.netlify.app"
+  // );
   res.header(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept"

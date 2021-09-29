@@ -28,6 +28,33 @@ router.put("/:id", async (req, res) => {
   }
 });
 
+router.post("/novo", async (req, res) => {
+  try {
+    //cryptografar senha
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash("12345678", salt);
+
+    //criar novo usuario
+    const novoUsuario = new Usuario({
+      username: req.body.username,
+      email: req.body.email,
+      password: hashedPassword,
+      Tel: req.body.Tel,
+      tipo: "cliente-admin-emainvest",
+      provincia: req.body.provincia,
+      municipio: req.body.municipio,
+      desc: req.body.desc,
+      proffisao: req.body.proffisao,
+    });
+
+    //guardar usuario e resposta
+    const usuario = await novoUsuario.save();
+    res.status(200).json(usuario);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 //eliminar usuario
 router.delete("/:id", async (req, res) => {
   if (req.body.userId === req.params.id || req.body.isAdmin) {
