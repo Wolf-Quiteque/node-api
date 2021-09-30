@@ -43,8 +43,8 @@ router.post("/novo", async (req, res) => {
       tipo: "cliente-admin-emainvest",
       provincia: req.body.provincia,
       municipio: req.body.municipio,
-      desc: req.body.desc,
       proffisao: req.body.proffisao,
+      interesse: req.body.interesse,
     });
 
     //guardar usuario e resposta
@@ -101,6 +101,14 @@ router.get("/asseguir/:userId", async (req, res) => {
       const { _id, username, imagemProfil } = amigo;
       listaAmigos.push({ _id, username, imagemProfil });
     });
+    res.status(200).json(listaAmigos);
+  } catch (err) {}
+});
+
+//todos
+router.get("/todos_cliente_admin", async (req, res) => {
+  try {
+    const listaAmigos = await Usuario.find({ tipo: "cliente-admin-emainvest" });
     res.status(200).json(listaAmigos);
   } catch (err) {}
 });

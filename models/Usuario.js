@@ -134,6 +134,9 @@ const UserSchema = new mongoose.Schema(
     proffisao: {
       type: String,
     },
+    interesse: {
+      type: Number,
+    },
   },
   { timestamps: true }
 );
