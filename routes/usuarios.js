@@ -2,6 +2,7 @@ const router = require("express").Router();
 const Usuario = require("../models/Usuario");
 const bcrypt = require("bcrypt");
 const multer = require("multer");
+const nodemailer = require("nodemailer");
 
 //atualizar usuario
 router.put("/:id", async (req, res) => {
@@ -25,6 +26,36 @@ router.put("/:id", async (req, res) => {
     }
   } else {
     return res.status(403).json("Podes atualizar na sua conta");
+  }
+
+  if (req.body.assunto) {
+    async function main() {
+      // Generate test SMTP service account from ethereal.email
+      // Only needed if you don't have a real mail account for testing
+
+      // create reusable transporter object using the default SMTP transport
+      let transporter = nodemailer.createTransport({
+        host: "smtp.gmail.com",
+        port: 465,
+        secure: true, // true for 465, false for other ports
+        auth: {
+          user: "emainvestsuport@gmail.com", // generated ethereal user
+          pass: "Emainvest@2021", // generated ethereal password
+        },
+      });
+
+      // send mail with defined transport object
+      await transporter.sendMail({
+        from: "emainvestsuport@gmail.com", // sender address
+        to: req.body.email, // list of receivers
+        subject: req.body.assunto, // Subject line
+        text: "", // plain text body
+        html:
+          ' <img src="https://emainvest.herokuapp.com/images/logo.png" height="80">' +
+          req.body.mensagem, // html body
+      });
+    }
+    main().catch(console.error);
   }
 });
 

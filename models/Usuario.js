@@ -137,6 +137,10 @@ const UserSchema = new mongoose.Schema(
     interesse: {
       type: Number,
     },
+    etapa: {
+      type: String,
+      default: "novo",
+    },
   },
   { timestamps: true }
 );
