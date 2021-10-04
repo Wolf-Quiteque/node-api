@@ -42,6 +42,26 @@ router.get("/allNegocios", async (req, res) => {
   } catch (err) {}
 });
 
+router.put("/updatenegocio/:id", async (req, res) => {
+  try {
+    const negociacao = await Negociacao.findByIdAndUpdate(req.params.id, {
+      $set: req.body,
+    });
+    res.status(200).json("atualizado");
+  } catch (err) {
+    return res.status(500).json(err);
+  }
+});
+
+router.delete("/deletenegocio/:id", async (req, res) => {
+  try {
+    const negociacao = await Negociacao.findByIdAndDelete(req.params.id);
+    res.status(200).json("Conta foi eliminada");
+  } catch (err) {
+    return res.status(500).json(err);
+  }
+});
+
 //-------------------------------------------------------------------Matches
 router.get("/allMatches", async (req, res) => {
   try {
