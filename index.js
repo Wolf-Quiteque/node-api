@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-
+const { MongoClient } = require("mongodb");
 //middleware
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
@@ -22,10 +22,7 @@ const pdfConvertor = require("./routes/pdfconvertor");
 const matching = require("./routes/matching/index");
 const Matches = require("./models/Matching");
 const Negociacao = require("./models/Negociacao");
-const updateChart = require("./scrapper/scrapping_ordins");
 const negocios = require("./routes/negocios");
-
-updateChart();
 
 setInterval(function () {
   const getMatches = async () => {

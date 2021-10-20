@@ -8,6 +8,9 @@ const OrdensSchema = new mongoose.Schema(
     codigo_de_negociacao: {
       type: String,
     },
+    tipo_de_instrumento: {
+      type: String,
+    },
     lado_de_ordem: {
       type: String,
     },
@@ -20,8 +23,12 @@ const OrdensSchema = new mongoose.Schema(
     quantidade_total: {
       type: Number,
     },
+    preco_unitario: {
+      type: Number,
+    },
     estado: {
       type: String,
+      default: "activo",
     },
   },
   { timestamps: true }
