@@ -2,6 +2,9 @@ const mongoose = require("mongoose");
 
 const MatchingSchema = new mongoose.Schema(
   {
+    id_negocicao: {
+      type: String,
+    },
     codigo_de_negociacao: {
       type: String,
     },

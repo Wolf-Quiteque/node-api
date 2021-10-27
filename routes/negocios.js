@@ -10,8 +10,8 @@ router.get("/todos", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
   try {
-    const ordem = await Negociacao.findById(req.params.id);
-    res.status(200).json(ordem.ordens);
+    const negocios = await Negociacao.findById(req.params.id);
+    res.status(200).json(negocios);
   } catch (err) {}
 });
 

@@ -5,6 +5,9 @@ const OrdensSchema = new mongoose.Schema(
     id_cliente: {
       type: String,
     },
+    id_negocicao: {
+      type: String,
+    },
     codigo_de_negociacao: {
       type: String,
     },

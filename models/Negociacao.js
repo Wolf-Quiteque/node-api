@@ -7,6 +7,7 @@ const NegociacaoSchema = new mongoose.Schema(
     },
     cod_de_negociacao: {
       type: String,
+      unique: true,
     },
     tipo_de_empresa: {
       type: String,
@@ -52,6 +53,7 @@ const NegociacaoSchema = new mongoose.Schema(
     },
     isin: {
       type: String,
+      unique: true,
     },
     entidade: {
       type: String,
@@ -61,9 +63,6 @@ const NegociacaoSchema = new mongoose.Schema(
     },
     rentabilidade_cupao: {
       type: Number,
-    },
-    ordens: {
-      type: Array,
     },
     accoes_disponivel: {
       type: String,
