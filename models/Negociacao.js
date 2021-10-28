@@ -76,6 +76,9 @@ const NegociacaoSchema = new mongoose.Schema(
     obrigacoes_cotada: {
       type: String,
     },
+    qty_disponivel: {
+      type: Number,
+    },
   },
   { timestamps: true }
 );
