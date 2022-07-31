@@ -24,7 +24,7 @@
     "nodemon": "^2.0.7",
     "path": "^0.12.7",
     "pdf-table-extractor": "^1.0.3",
-    "puppeteer": "^10.0.0",
+    "puppeteer": "^13.3.0",
     "request": "^2.88.2",
     "request-promise": "^4.2.6"
   }
